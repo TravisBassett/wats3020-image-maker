@@ -10,7 +10,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 class ImageMaker {
-    constructor(){
+    constructor() {
         // When this class is instantiated, the `constructor()` method is executed.
         // TODO: Set up attributes that point to the HTML elements we wish to work with.
 
@@ -20,21 +20,22 @@ class ImageMaker {
         // TODO: create a new `<p>` element called `this.topText`
         this.topText = document.createElement('p');
         // TODO: Add a `class` attribute to `this.topText` that contains the classname "top-text".
-        this.topText.setAttribute('class','top-text');
+        this.topText.setAttribute('class', 'top-text');
         // TODO: Append `this.topText` as a child element to `this.imagePreview`
         this.imagePreview.appendChild(this.topText);
 
         // TODO: create a new `<p>` element called `this.bottomText`
-        this.bottomText = document.createElement('p') ;
+        this.bottomText = document.createElement('p');
         // TODO: Add a `class` attribute to `this.bottomText` that contains the classname "bottom-text".
-        this.bottomText.setAttribute('class','bottom-text');
+        this.bottomText.setAttribute('class', 'bottom-text');
         // TODO: Append `this.bottomText` as a child element to `this.imagePreview`
         this.imagePreview.appendChild(this.bottomText);
+
         // This class also needs to use the form fields to read user input. Set
         // those up for future use, too.
-        
+
         // TODO: Select the `input` element with the `name` attribute "backgroundImage"
-        this.backgroundInput = document.forms[0].querySelector('selector[name="backgroundImage"]');
+        this.backgroundInput = document.forms[0].querySelector('select[name="backgroundImage"]');
 
         // TODO: Select the `input` element with the `name` attribute "topText"
         this.topTextInput = document.forms[0].querySelector('input[name="topText"]');
@@ -46,7 +47,7 @@ class ImageMaker {
         // the image, then you will need to make attributes for each of those
         // elements here.
     }
-    drawPreview(){
+    drawPreview() {
         // This function is called whenever a user changes one of the form fields
         // and whenever an image is generated for download. This function must
         // update the style attributes and innerHTML content of the HTML
@@ -61,7 +62,7 @@ class ImageMaker {
         this.bottomText.innerHTML = this.bottomTextInput.value;
 
     }
-    downloadImage(){
+    downloadImage() {
         this.drawPreview();
         generateImage();
     }
@@ -77,14 +78,16 @@ let imageMaker = new ImageMaker();
 // `#image-preview` element and prompts the user to download the created image.
 // It is possible to use the `height` and `width` parameters to alter the size
 // of the rendered image.
-function generateImage(elementID="image-preview", height="800px", width="1280px"){
+function generateImage(elementID = "image-preview", height = "800px", width = "1280px") {
     let htmlTemplate = document.getElementById(elementID);
     htmlTemplate.style.height = height;
     htmlTemplate.style.width = width;
     let imageName = "image_" + Date.now();
 
     // Generate image and prompt download for user.
-    domtoimage.toJpeg(htmlTemplate, { quality: 0.95 })
+    domtoimage.toJpeg(htmlTemplate, {
+            quality: 0.95
+        })
         .then(function (dataUrl) {
             var link = document.createElement('a');
             link.download = imageName;
@@ -104,15 +107,15 @@ function generateImage(elementID="image-preview", height="800px", width="1280px"
 //
 // The submit listener on the form interrupts the regular form processing of the
 // browser and calls the `imageMaker.downloadImage()` method.
-function applyEventListeners(){
+function applyEventListeners() {
     let inputs = document.querySelectorAll('input, select, textarea');
-    for (input of inputs){
-        input.addEventListener("change", function(event){
+    for (input of inputs) {
+        input.addEventListener("change", function (event) {
             imageMaker.drawPreview();
         })
     }
     let imageForm = document.querySelector('form');
-    imageForm.addEventListener('submit', function(event){
+    imageForm.addEventListener('submit', function (event) {
         event.preventDefault();
         imageMaker.downloadImage();
     })
