@@ -10,64 +10,55 @@
 ////////////////////////////////////////////////////////////////////////
 
 class ImageMaker {
-    constructor() {
+    constructor()  {
         // When this class is instantiated, the `constructor()` method is executed.
-        // TODO: Set up attributes that point to the HTML elements we wish to work with.
+        // This code creates the HTML elements as attributes that we will manipulate in the DOM.
 
-        // TODO: Select the `#image-preview` div using any document selector method.
+        // 'this.imagepreview' is related to the html image-preview element.
         this.imagePreview = document.querySelector('#image-preview');
 
-        // TODO: create a new `<p>` element called `this.topText`
+        // This creates a new <p> HTML element
         this.topText = document.createElement('p');
-        // TODO: Add a `class` attribute to `this.topText` that contains the classname "top-text".
+        // Create a a `class` attribute to `this.topText` that contains the classname "top-text" for later selection.
         this.topText.setAttribute('class', 'top-text');
-        // TODO: Append `this.topText` as a child element to `this.imagePreview`
+        // Appends `this.topText` as a child element to `this.imagePreview` to display meme top text element.
         this.imagePreview.appendChild(this.topText);
 
-        // TODO: create a new `<p>` element called `this.bottomText`
+        // this code repeats the same function and format at the this.topText code above does, but for bottomText.
         this.bottomText = document.createElement('p');
-        // TODO: Add a `class` attribute to `this.bottomText` that contains the classname "bottom-text".
         this.bottomText.setAttribute('class', 'bottom-text');
-        // TODO: Append `this.bottomText` as a child element to `this.imagePreview`
         this.imagePreview.appendChild(this.bottomText);
 
-        // This class also needs to use the form fields to read user input. Set
-        // those up for future use, too.
-
-        // TODO: Select the `input` element with the `name` attribute "backgroundImage"
+        // allow form fields to read user input, and assigns them to relevant values in JS (background and textual)
         this.backgroundInput = document.forms[0].querySelector('select[name="backgroundImage"]');
-
-        // TODO: Select the `input` element with the `name` attribute "topText"
         this.topTextInput = document.forms[0].querySelector('input[name="topText"]');
-
-        // TODO: Select the `input` element with the `name` attribute "bottomText"
         this.bottomTextInput = document.forms[0].querySelector('input[name="bottomText"]');
 
-        // NOTE: If you add additional form fields to modify other aspects of
-        // the image, then you will need to make attributes for each of those
-        // elements here.
+
     }
     drawPreview() {
         // This function is called whenever a user changes one of the form fields
-        // and whenever an image is generated for download. This function must
-        // update the style attributes and innerHTML content of the HTML
+        // and whenever an image is generated for download. This function
+        // updates the style attributes and innerHTML content of the HTML
         // elements selected in the `constructor()` of this class in order to
         // update `this.imagePreview`.
 
-        // TODO: Update the `background-image` CSS property for `this.imagePreview`.
+        // This updates the `background-image` CSS property for `this.imagePreview`
         this.imagePreview.style.backgroundImage = `url("images/${this.backgroundInput.value}")`;
-        // TODO: Update the `innerHTML` of `this.topText`.
+        // Updates the `innerHTML` of `this.topText`.
         this.topText.innerHTML = this.topTextInput.value;
-        // TODO: Update the `innerHTML` of `this.bottomText`
+        // Update the `innerHTML` of `this.bottomText`
         this.bottomText.innerHTML = this.bottomTextInput.value;
 
     }
+    // Calls a minified funciton in another .js file in root that handles the exportation of the completed meme.
     downloadImage() {
         this.drawPreview();
         generateImage();
     }
 }
 
+// assigns value of ImageMaker object to name imageMaker
 let imageMaker = new ImageMaker();
 
 //////////////////////////////////////////////////
